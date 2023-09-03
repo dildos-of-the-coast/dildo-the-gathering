@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Phyrexian Dildo</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        overflow: hidden;
+        background: #000;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        background-image: url(background.jpg);
+        background-size: cover;
+      }
+      img {
+        width: 100%;
+        max-width: 370px;
+        margin: 0 auto;
+        position: absolute;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        border: 1px solid rgb(255, 255, 255, 0.25);
+        border-radius: 20px;
+        box-shadow: 0 0 50px rgb(0, 0, 0);
+      }
+      .card {
+        transition-duration: 300ms;
+        transition-property: transform, box-shadow;
+        transition-timing-function: ease-out;
+        transform: rotate3d(0);
+      }
+      .card:hover {
+        transition-duration: 150ms;
+        box-shadow: 0 5px 55px 25px rgba(0,0,0,0.75);
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="card.jpg" class="card">
+
+    <script type="text/javascript">
+      const card = document.querySelector(".card");
+      const motionMatchMedia = window.matchMedia("(prefers-reduced-motion)");
+      const THRESHOLD = 7;
+      function handleHover(e) {
+        const { clientX, clientY, currentTarget } = e;
+        const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget;
+        const horizontal = (clientX - offsetLeft) / clientWidth;
+        const vertical = (clientY - offsetTop) / clientHeight;
+        const rotateX = (THRESHOLD / 2 - horizontal * THRESHOLD).toFixed(2);
+        const rotateY = (vertical * THRESHOLD - THRESHOLD / 2).toFixed(2);
+        card.style.transform = `perspective(${clientWidth}px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(1, 1, 1)`;
+      }
+      function resetStyles(e) {
+        card.style.transform = `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`;
+      }
+      if (!motionMatchMedia.matches) {
+        card.addEventListener("mousemove", handleHover);
+        card.addEventListener("mouseleave", resetStyles);
+      }
+    </script>
+  </body>
+</html>
